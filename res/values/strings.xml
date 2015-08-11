@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">NeverNote</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    
+    <string-array name="drawer_list">
+        <item >所有笔记</item>
+        <item >笔记本</item>
+        <item >设置</item>
+    </string-array>
+    <string name="user_name">Connor 4</string>
+    <string name="user_email">acooonnor@163.com</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="action_localsearch">local search</string>
+    <string name="action_newnote">new note</string>
+    <string name="action_more">more</string>
+
+</resources>

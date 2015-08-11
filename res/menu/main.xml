@@ -1,0 +1,21 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.connor.c4note.MainActivity" >
+
+    <item
+        android:id="@+id/action_newnote"
+        android:icon="@drawable/actionbar_newnote"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/action_newnote"/>
+    <item
+        android:id="@+id/action_allnote_localsearch"
+        android:icon="@drawable/actionbar_search"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/action_localsearch"/>
+    <item
+        android:id="@+id/action_allnote_more"
+        android:icon="@drawable/actionbar_more"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/action_more"/>
+
+</menu>
