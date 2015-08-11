@@ -88,7 +88,7 @@ public class MainActivity extends Activity
 			@Override
 			public void onClick(View v)
 			{
-				Toast.makeText(mApplication.getContext(), "click user image",
+				Toast.makeText(getApplicationContext(), "click user image",
 						Toast.LENGTH_SHORT).show();
 			}
 		});
@@ -164,7 +164,8 @@ public class MainActivity extends Activity
 			mDrawerList.setItemChecked(position, true);
 			items.get(currentSelectedPosition).setSelected(false);
 			items.get(position).setSelected(true);
-
+			
+			
 			currentSelectedPosition = position;
 			getActionBar().setTitle(items.get(position).getmText());
 		}

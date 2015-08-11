@@ -22,8 +22,8 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
             android:layout_toRightOf="@id/list_item_iv"
-            android:textColor="#c4c4c4"
-            android:textSize="20sp" />
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_micro" />
     </RelativeLayout>
 
 </RelativeLayout>
