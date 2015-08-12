@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.connor.adapter.DrawerItemAdapter;
 import com.connor.application.NeverNoteApplication;
+import com.connor.frament.AllNoteFragment;
 import com.connor.model.DrawerListItem;
 import com.connor.nevernote.R;
 
@@ -46,6 +47,13 @@ public class MainActivity extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+		initDrawerLayout();
+
+	}
+
+	private void initDrawerLayout()
+	{
 
 		getActionBar().setIcon(R.drawable.actionbar_icon);
 		mTitle = mDrawerTitle = getTitle();
@@ -164,8 +172,7 @@ public class MainActivity extends Activity
 			mDrawerList.setItemChecked(position, true);
 			items.get(currentSelectedPosition).setSelected(false);
 			items.get(position).setSelected(true);
-			
-			
+
 			currentSelectedPosition = position;
 			getActionBar().setTitle(items.get(position).getmText());
 		}
@@ -181,9 +188,9 @@ public class MainActivity extends Activity
 		switch (position)
 		{
 		case 0:
-			// NoteFrament fragment = new NoteFrament();
-			// getFragmentManager().beginTransaction()
-			// .replace(R.id.contentFrame, fragment).commit();
+			AllNoteFragment fragment = new AllNoteFragment();
+			getFragmentManager().beginTransaction()
+					.replace(R.id.contentFrame, fragment).commit();
 			Toast.makeText(getApplicationContext(), "case 0",
 					Toast.LENGTH_SHORT).show();
 			break;

@@ -16,6 +16,7 @@ import android.widget.TextView;
 public class DrawerItemAdapter extends ArrayAdapter<DrawerListItem>
 {
 	private int mResourceId;
+	private ImageView mImageView;
 
 	public DrawerItemAdapter(Context context, int resource,
 			List<DrawerListItem> objects)
@@ -52,12 +53,12 @@ public class DrawerItemAdapter extends ArrayAdapter<DrawerListItem>
 	public View getView(int position, View convertView, ViewGroup parent)
 	{
 		DrawerListItem item = getItem(position);
-		View view =  LayoutInflater.from(getContext()).inflate(mResourceId, null);
-		ImageView mImageView = (ImageView) view.findViewById(R.id.list_item_iv);
+		View view = LayoutInflater.from(getContext())
+				.inflate(mResourceId, null);
+		mImageView = (ImageView) view.findViewById(R.id.list_item_iv);
 		TextView mTextView = (TextView) view.findViewById(R.id.list_item_name);
 		mImageView.setImageResource(item.getmImageViewId());
 		mTextView.setText(item.getmText());
 		return view;
 	}
-
 }
