@@ -3,11 +3,6 @@
     tools:context="com.connor.c4note.MainActivity" >
 
     <item
-        android:id="@+id/action_newnote"
-        android:icon="@drawable/actionbar_newnote"
-        android:showAsAction="ifRoom|withText"
-        android:title="@string/action_newnote"/>
-    <item
         android:id="@+id/action_allnote_localsearch"
         android:icon="@drawable/actionbar_search"
         android:showAsAction="ifRoom|withText"

@@ -1,7 +1,10 @@
 package com.connor.application;
 
+import java.io.File;
+
 import android.app.Application;
 import android.content.Context;
+import android.os.Environment;
 
 public class NeverNoteApplication extends Application
 {
@@ -13,7 +16,7 @@ public class NeverNoteApplication extends Application
 		super.onCreate();
 		this.context = getApplicationContext();
 	}
-	
+
 	public Context getContext()
 	{
 		return context;

@@ -80,8 +80,8 @@ public class ArcMenu extends ViewGroup implements OnClickListener
 				int cWidth = child.getMeasuredWidth();
 				int cHeight = child.getMeasuredHeight();
 
-				int cl = (int) (getMeasuredWidth() - 1.5*cWidth);
-				int ct = (int) (getMeasuredHeight() - 1.2* (i + 1) * cHeight-1.2*cHeight);
+				int cl = (int) (getMeasuredWidth() - 1.5 * cWidth);
+				int ct = (int) (getMeasuredHeight() - 1.2 * (i + 1) * cHeight - 1.2 * cHeight);
 
 				child.layout(cl, ct, cl + cWidth, ct + cWidth);
 
@@ -100,8 +100,8 @@ public class ArcMenu extends ViewGroup implements OnClickListener
 		int width = mCButton.getMeasuredWidth();
 		int height = mCButton.getMeasuredHeight();
 
-		l = (int) (getMeasuredWidth() - 1.5*width);
-		t = (int) (getMeasuredHeight() - 1.2*height);
+		l = (int) (getMeasuredWidth() - 1.5 * width);
+		t = (int) (getMeasuredHeight() - 1.2 * height);
 
 		mCButton.layout(l, t, l + width, t + width);
 	}
@@ -110,7 +110,6 @@ public class ArcMenu extends ViewGroup implements OnClickListener
 	public void onClick(View v)
 	{
 		RotateCButton(v, 0f, 360f, 300);
-
 		ToggleMenu(300);
 	}
 
@@ -125,7 +124,7 @@ public class ArcMenu extends ViewGroup implements OnClickListener
 			childView.setVisibility(View.VISIBLE);
 			int cHeight = childView.getMeasuredHeight();
 
-			int ct = (int) (1.2* (i + 1) * cHeight);
+			int ct = (int) (1.2 * (i + 1) * cHeight);
 
 			AnimationSet animset = new AnimationSet(true);
 			Animation tranAnim = null;

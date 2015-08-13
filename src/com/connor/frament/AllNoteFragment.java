@@ -3,11 +3,13 @@ package com.connor.frament;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.connor.activity.AddNoteActivity;
 import com.connor.nevernote.R;
 import com.connor.view.ArcMenu;
 import com.connor.view.ArcMenu.OnArcMenuItemClickListener;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,10 +23,16 @@ import android.widget.AbsListView.OnScrollListener;
 public class AllNoteFragment extends Fragment
 {
 	private View allnoteview;
-	private ListView mListView;
 	private ArcMenu mArcMenu;
 
+	private ListView mListView;
 	private List<String> mDatas;
+
+	public static AllNoteFragment getInstance()
+	{
+		AllNoteFragment mAllNoteFragment = new AllNoteFragment();
+		return mAllNoteFragment;
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,8 +76,44 @@ public class AllNoteFragment extends Fragment
 			@Override
 			public void onClick(View view, int pos)
 			{
-				Toast.makeText(getActivity().getApplicationContext(),
-						pos + ":" + view.getId(), Toast.LENGTH_SHORT).show();
+				switch (pos)
+				{
+				case 1:
+					new Thread(new Runnable()
+					{
+
+						@Override
+						public void run()
+						{
+							try
+							{
+								Thread.sleep(250);
+								Intent intent = new Intent(getActivity(),
+										AddNoteActivity.class);
+								startActivity(intent);
+							} catch (InterruptedException e)
+							{
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+
+					}).start();
+
+					break;
+				case 2:
+
+					break;
+				case 3:
+
+					break;
+				case 4:
+
+					break;
+
+				default:
+					break;
+				}
 			}
 		});
 	}

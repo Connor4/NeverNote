@@ -5,11 +5,13 @@ import java.util.List;
 
 import com.connor.adapter.DrawerItemAdapter;
 import com.connor.application.NeverNoteApplication;
+import com.connor.frament.AllBookFragment;
 import com.connor.frament.AllNoteFragment;
 import com.connor.model.DrawerListItem;
 import com.connor.nevernote.R;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -38,9 +40,12 @@ public class MainActivity extends Activity
 	private CharSequence mDrawerTitle;
 	private CharSequence mTitle;
 	private String[] itemText;
-	private int[] itemIv = { R.drawable.drawer_allnote_pressed,
+	private int[] itemIv = { R.drawable.drawer_allnote_default,
 			R.drawable.drawer_book_default, R.drawable.drawer_setting };
 	private ImageView mDrawerUserImage;
+	private static boolean flag = false;
+	private static String STATE_SELECTED_POSITION;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -49,6 +54,17 @@ public class MainActivity extends Activity
 		setContentView(R.layout.activity_main);
 
 		initDrawerLayout();
+
+		if (savedInstanceState == null)
+		{
+			getFragmentManager().beginTransaction()
+					.replace(R.id.contentFrame, new AllNoteFragment()).commit();
+
+		} else
+		{
+			currentSelectedPosition = savedInstanceState
+					.getInt(STATE_SELECTED_POSITION);
+		}
 
 	}
 
@@ -105,6 +121,13 @@ public class MainActivity extends Activity
 	}
 
 	@Override
+	public void onSaveInstanceState(Bundle outState)
+	{
+		super.onSaveInstanceState(outState);
+		outState.putInt(STATE_SELECTED_POSITION, currentSelectedPosition);
+	}
+
+	@Override
 	protected void onPostCreate(Bundle savedInstanceState)
 	{
 		super.onPostCreate(savedInstanceState);
@@ -153,6 +176,21 @@ public class MainActivity extends Activity
 	}
 
 	@Override
+	public boolean onPrepareOptionsMenu(Menu menu)
+	{
+		if (flag)
+		{
+			MenuItem item = menu.findItem(R.id.action_allnote_localsearch);
+			item.setIcon(R.drawable.actionbar_newbook);
+		} else
+		{
+			MenuItem item = menu.findItem(R.id.action_allnote_localsearch);
+			item.setIcon(R.drawable.actionbar_search);
+		}
+		return true;
+	}
+
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
 		if (mDrawerToggle.onOptionsItemSelected(item))
@@ -191,12 +229,12 @@ public class MainActivity extends Activity
 			AllNoteFragment fragment = new AllNoteFragment();
 			getFragmentManager().beginTransaction()
 					.replace(R.id.contentFrame, fragment).commit();
-			Toast.makeText(getApplicationContext(), "case 0",
-					Toast.LENGTH_SHORT).show();
+			flag = false;
 			break;
 		case 1:
 			Toast.makeText(getApplicationContext(), "case 1",
 					Toast.LENGTH_SHORT).show();
+			flag = true;
 			break;
 		case 2:
 			Toast.makeText(getApplicationContext(), "case 2",
