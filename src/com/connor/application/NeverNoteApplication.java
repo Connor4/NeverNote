@@ -17,7 +17,7 @@ public class NeverNoteApplication extends Application
 		this.context = getApplicationContext();
 	}
 
-	public Context getContext()
+	public static Context getContext()
 	{
 		return context;
 	}

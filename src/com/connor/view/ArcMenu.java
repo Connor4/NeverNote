@@ -1,5 +1,7 @@
 package com.connor.view;
 
+import com.connor.activity.MainActivity;
+
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
@@ -32,6 +34,7 @@ public class ArcMenu extends ViewGroup implements OnClickListener
 	public interface OnArcMenuItemClickListener
 	{
 		void onClick(View view, int position);
+		void MainClick(View view);
 	}
 
 	public void setOnArcMenuItemClickListener(
@@ -111,6 +114,7 @@ public class ArcMenu extends ViewGroup implements OnClickListener
 	{
 		RotateCButton(v, 0f, 360f, 300);
 		ToggleMenu(300);
+		mArcMenuItemClickListner.MainClick(mCButton);
 	}
 
 	public void ToggleMenu(int duration)

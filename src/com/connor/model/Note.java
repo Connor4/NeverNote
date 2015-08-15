@@ -1,20 +1,46 @@
 package com.connor.model;
 
-public class Note
+import java.util.Date;
+import java.util.List;
+
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Note implements Parcelable
 {
 	private String NoteTitle;
-	private int NoteDate;
-	private String NoteContration;
-	private int NoteImage;
+	private String NoteContent;
+	private String NotePic;
+	private String NoteDate;
+	private String NoteAttach;
+	private String NoteReminder;
 
-	public Note(String noteTitle, int noteDate, String noteContration,
-			int noteImage)
+	public Note()
+	{
+		super();
+	}
+
+	public Note(String noteTitle, String noteContent, String notePic,
+			String noteDate,  String noteAttach, String noteReminder)
 	{
 		super();
 		NoteTitle = noteTitle;
+		NoteContent = noteContent;
+		NotePic = notePic;
 		NoteDate = noteDate;
-		NoteContration = noteContration;
-		NoteImage = noteImage;
+		NoteAttach = noteAttach;
+		NoteReminder = noteReminder;
+	}
+	
+
+	public String getNoteAttach()
+	{
+		return NoteAttach;
+	}
+
+	public void setNoteAttach(String noteAttach)
+	{
+		NoteAttach = noteAttach;
 	}
 
 	public String getNoteTitle()
@@ -27,34 +53,91 @@ public class Note
 		NoteTitle = noteTitle;
 	}
 
-	public int getNoteDate()
+	public String getNoteContent()
+	{
+		return NoteContent;
+	}
+
+	public void setNoteContent(String noteContent)
+	{
+		NoteContent = noteContent;
+	}
+
+	public String getNotePic()
+	{
+		return NotePic;
+	}
+
+	public void setNotePic(String notePic)
+	{
+		NotePic = notePic;
+	}
+
+	public String getNoteDate()
 	{
 		return NoteDate;
 	}
 
-	public void setNoteDate(int noteDate)
+	public void setNoteDate(String noteDate)
 	{
 		NoteDate = noteDate;
 	}
 
-	public String getNoteContration()
+	public String getNoteReminder()
 	{
-		return NoteContration;
+		return NoteReminder;
 	}
 
-	public void setNoteContration(String noteContration)
+	public void setNoteReminder(String noteReminder)
 	{
-		NoteContration = noteContration;
+		NoteReminder = noteReminder;
 	}
 
-	public int getNoteImage()
+	public static final Parcelable.Creator<Note> CREATOR = new Creator<Note>()
 	{
-		return NoteImage;
+		public Note createFromParcel(Parcel source)
+		{
+			Note note = new Note();
+			note.NoteTitle = source.readString();
+			note.NoteContent = source.readString();
+			note.NoteDate = source.readString();
+			note.NotePic = source.readString();
+			note.NoteReminder = source.readString();
+			note.NoteAttach = source.readString();
+			return note;
+		}
+
+		public Note[] newArray(int size)
+		{
+			return new Note[size];
+		}
+	};
+
+	@Override
+	public int describeContents()
+	{
+		return 0;
 	}
 
-	public void setNoteImage(int noteImage)
+	@Override
+	public void writeToParcel(Parcel dest, int flags)
 	{
-		NoteImage = noteImage;
+		dest.writeString(NoteTitle);
+		dest.writeString(NoteContent);
+		dest.writeString(NoteDate);
+		dest.writeString(NotePic);
+		dest.writeString(NoteAttach);
+		dest.writeString(NoteReminder);
 	}
+
+	@Override
+	public String toString()
+	{
+		return "Note [NoteTitle=" + NoteTitle + ", NoteContent=" + NoteContent
+				+ ", NotePic=" + NotePic + ", NoteDate=" + NoteDate
+				+ ", NoteAttach=" + NoteAttach + ", NoteReminder="
+				+ NoteReminder + "]";
+	}
+
 
 }

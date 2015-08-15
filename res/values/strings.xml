@@ -20,5 +20,6 @@
 	<string name="action_newbook">new book</string>
 	<string name="note_title">笔记标题</string>
 	<string name="write_down_your_note">写下你的笔记</string>
+	<string name="defaultbook">默认笔记本</string>
     
 </resources>

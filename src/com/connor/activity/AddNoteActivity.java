@@ -1,22 +1,21 @@
 package com.connor.activity;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import com.connor.model.Note;
 import com.connor.nevernote.R;
+import com.connor.utils.NeverNoteDB;
 import com.connor.utils.PhotoWithCamUtil;
 
 import android.app.Activity;
 import android.content.ContentResolver;
-import android.content.Context;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -24,6 +23,7 @@ import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.TextUtils;
 import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.View;
@@ -31,12 +31,17 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class AddNoteActivity extends Activity
 {
-	private static final int PHOTO_SUCCESS = 1;
+	private static final int PHOTO_WITH_GARLLEY = 1;
 	private static final int PHOTO_WITH_CAMERA = 2;
+	/**
+	 * 用于存放相片的路径
+	 */
+	private List<String> photoPath;
 
 	private ImageView mFinishView;
 	private ImageView mFormatView;
@@ -46,6 +51,9 @@ public class AddNoteActivity extends Activity
 	private ImageView mReminderView;
 	private EditText mTitle;
 	private EditText mContent;
+	private TextView mGroup;
+
+	private NeverNoteDB mNeverNoteDB;
 
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -57,8 +65,6 @@ public class AddNoteActivity extends Activity
 		initListener();
 	}
 
-	
-
 	private void initContent()
 	{
 		mFinishView = (ImageView) findViewById(R.id.newnote_finish);
@@ -68,8 +74,11 @@ public class AddNoteActivity extends Activity
 		mMoreView = (ImageView) findViewById(R.id.newnote_more);
 		mTitle = (EditText) findViewById(R.id.newnote_et_title);
 		mContent = (EditText) findViewById(R.id.newnote_et_content);
+		mGroup = (TextView) findViewById(R.id.newnote_group);
+		mNeverNoteDB = NeverNoteDB.getInstance(this);
+		photoPath = new ArrayList<String>();
 	}
-	
+
 	private void initListener()
 	{
 		mCamView.setOnClickListener(new OnClickListener()
@@ -101,14 +110,30 @@ public class AddNoteActivity extends Activity
 
 			}
 		});
-		
+
 		mFinishView.setOnClickListener(new OnClickListener()
 		{
 			@Override
 			public void onClick(View v)
 			{
-				String content = mContent.getText().toString();
-				Log.d("TAG", ""+content);
+
+				if (TextUtils.isEmpty(mTitle.getText().toString())
+						&& TextUtils.isEmpty(mContent.getText().toString()))
+				{
+					Toast.makeText(getApplicationContext(), "不能保存一条空笔记",
+							Toast.LENGTH_SHORT).show();
+					finish();
+				} else
+				{
+					Date date = new Date(System.currentTimeMillis());
+					SimpleDateFormat dateFormat = new SimpleDateFormat(
+							"yyyyMMdd_HHmmss");
+					Note note = new Note(mTitle.getText().toString(), mContent
+							.getText().toString(), photoPath.toString(),
+							dateFormat.format(date), "", "");
+					mNeverNoteDB.AddNewNote(note);
+					finish();
+				}
 			}
 		});
 	}
@@ -150,15 +175,14 @@ public class AddNoteActivity extends Activity
 				Bitmap bitmap = mPhotoWithCamUtil.PhotoWithCam();
 				if (bitmap != null)
 				{
+					photoPath.add(mPhotoWithCamUtil.getPhotoFilePath());
 					// 根据Bitmap对象创建ImageSpan对象
 					ImageSpan imageSpan = new ImageSpan(AddNoteActivity.this,
 							bitmap);
 					// 创建一个SpannableString对象，以便插入用ImageSpan对象封装的图像
-					SpannableString spannableString = new SpannableString(
-							mPhotoWithCamUtil.getPhotoFilePath());
+					SpannableString spannableString = new SpannableString("#");
 					// 用ImageSpan对象替换face
-					spannableString.setSpan(imageSpan, 0,
-							"[local]1[local]".length() + 38,
+					spannableString.setSpan(imageSpan, 0, 1,
 							Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 					// 将选择的图片追加到EditText中光标所在位置
 					int index = mContent.getSelectionStart(); // 获取光标所在位置
@@ -180,7 +204,6 @@ public class AddNoteActivity extends Activity
 				break;
 			}
 		}
-		// super.onActivityResult(requestCode, resultCode, data);
 	}
 
 }

@@ -29,8 +29,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.connor.activity.AddNoteActivity" >
-        </activity>
+        <activity android:name="com.connor.activity.AddNoteActivity" />
+        <activity android:name="com.connor.activity.ViewNote" />
+        <activity android:name="com.connor.activity.EditNote"/>
     </application>
 
 </manifest>

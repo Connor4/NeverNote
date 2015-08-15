@@ -2,10 +2,10 @@ package com.connor.adapter;
 
 import java.util.List;
 
+import com.connor.model.Note;
 import com.connor.nevernote.R;
 
 import android.content.Context;
-import android.provider.ContactsContract.CommonDataKinds.Note;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,29 +16,13 @@ import android.widget.TextView;
 public class NoteAdapter extends ArrayAdapter<Note>
 {
 	private int ResourceId;
+	private Context context;
 
-	public NoteAdapter(Context context, int resource, List<Note> objects)
+	public NoteAdapter(Context context, int resource, List<Note> note)
 	{
-		super(context, resource, objects);
+		super(context, resource, note);
 		this.ResourceId = resource;
-	}
-
-	@Override
-	public int getCount()
-	{
-		return super.getCount();
-	}
-
-	@Override
-	public Note getItem(int position)
-	{
-		return super.getItem(position);
-	}
-
-	@Override
-	public long getItemId(int position)
-	{
-		return super.getItemId(position);
+		this.context = context;
 	}
 
 	@Override
@@ -49,28 +33,29 @@ public class NoteAdapter extends ArrayAdapter<Note>
 		ViewHolder viewHolder;
 		if (convertView == null)
 		{
-			view = LayoutInflater.from(getContext()).inflate(ResourceId, null);
+			view = LayoutInflater.from(context).inflate(ResourceId, null);
 			viewHolder = new ViewHolder();
 			viewHolder.mTitle = (TextView) view.findViewById(R.id.Note_Title);
 			viewHolder.mDate = (TextView) view.findViewById(R.id.Note_Date);
-			viewHolder.mContration = (TextView) view
+			viewHolder.mContent = (TextView) view
 					.findViewById(R.id.Note_Contration);
-			viewHolder.mImage = (ImageView) view.findViewById(R.id.Note_Image);
 			view.setTag(viewHolder);
 		} else
 		{
 			view = convertView;
 			viewHolder = (ViewHolder) view.getTag(); // 重新获取ViewHolder
 		}
+		viewHolder.mTitle.setText(note.getNoteTitle());
+		viewHolder.mContent.setText(note.getNoteContent());
+		viewHolder.mDate.setText(note.getNoteDate());
 		return view;
 	}
 
 	class ViewHolder
 	{
 		TextView mTitle;
+		TextView mContent;
 		TextView mDate;
-		TextView mContration;
-		ImageView mImage;
 	}
 
 }

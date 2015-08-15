@@ -6,7 +6,7 @@
     <!-- Navigation Drawer -->
     <dimen name="navigation_drawer_width">260dp</dimen>
     <dimen name="navigation_drawer_personal_data_layout_height">60dp</dimen>
-    <dimen name="text_size_medium">18sp</dimen>
+    <dimen name="text_size_medium">20sp</dimen>
     <dimen name="text_size_micro">12sp</dimen>
     <!-- ArcMenu -->
 

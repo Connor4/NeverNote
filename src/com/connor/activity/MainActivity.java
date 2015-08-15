@@ -46,7 +46,6 @@ public class MainActivity extends Activity
 	private static boolean flag = false;
 	private static String STATE_SELECTED_POSITION;
 
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Match"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp" >
+
+        <ImageView
+            android:id="@+id/viewnote_back"
+            style="@style/Warp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:src="@drawable/ic_back_grey" />
+
+        <ImageView
+            android:id="@+id/viewnote_share"
+            style="@style/Warp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="26dp"
+            android:layout_toLeftOf="@+id/viewnote_more"
+            android:src="@drawable/ic_share_gray" />
+
+        <ImageView
+            android:id="@+id/viewnote_more"
+            style="@style/Warp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/ic_more_gray" />
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/viewnote_et_title"
+        style="@style/MW"
+        android:background="@null"
+        android:hint="@string/note_title"
+        android:paddingLeft="15dp"
+        android:textColor="@color/background_color" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <LinearLayout
+        style="@style/MW"
+        android:orientation="vertical" >
+
+        <RelativeLayout style="@style/MW" >
+
+            <ImageView
+                android:id="@+id/viewnote_nothing"
+                style="@style/Warp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/newnote_bookgroup" />
+
+            <TextView
+                android:id="@+id/viewnote_group"
+                style="@style/Warp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/viewnote_nothing"
+                android:text="@string/defaultbook"
+                android:textColor="@color/gray"
+                android:textSize="@dimen/text_size_micro" />
+
+            <ImageView
+                android:id="@+id/viewnote_reminder_iv"
+                style="@style/Warp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:src="@drawable/newnote_reminder" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp" >
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_gravity="center"
+                android:background="@color/gray" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        style="@style/Match">
+
+        <ScrollView
+            style="@style/Warp"
+            android:paddingTop="10dp" >
+
+            <EditText
+                android:id="@+id/viewnote_et_content"
+                style="@style/Match"
+                android:background="@null"
+                android:gravity="top"
+                android:hint="@string/write_down_your_note"
+                android:paddingLeft="10dp" />
+        </ScrollView>
+
+        <include layout="@layout/view_arc" />
+    </RelativeLayout>
+
+</LinearLayout>
