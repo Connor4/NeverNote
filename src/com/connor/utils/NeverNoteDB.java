@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.connor.db.NeverNoteopenHelper;
+import com.connor.model.Book;
 import com.connor.model.Note;
 
 import android.content.ContentValues;
@@ -64,7 +65,7 @@ public class NeverNoteDB
 	 * 
 	 * @param note
 	 */
-	public void AddNewNote(Note note)
+	public void AddNewNote(Note note, String table)
 	{
 		ContentValues values = new ContentValues();
 		values.put("title", note.getNoteTitle());
@@ -73,8 +74,14 @@ public class NeverNoteDB
 		values.put("path", note.getNotePic());
 		values.put("attach", note.getNoteAttach());
 		values.put("reminder", note.getNoteReminder());
-		db.insert("defaultbook", null, values);
+		if(table.equals("")){
+			table = "defaultbook";
+		}
+		db.insert(table, null, values);
+		int count = getCount(table)+1;
+		updateCount(table, count);
 	}
+
 
 	/**
 	 * 获取所有笔记
@@ -117,7 +124,7 @@ public class NeverNoteDB
 	 * @param oldNote
 	 * @param newNote
 	 */
-	public void AddEditedNote(Note oldNote, Note newNote)
+	public void AddEditedNote(Note oldNote, Note newNote,String t)
 	{
 		List<String> books = new ArrayList<String>();
 		String time = oldNote.getNoteDate();
@@ -144,7 +151,53 @@ public class NeverNoteDB
 				} while (notescursor.moveToNext());
 			}
 		}
-		 this.AddNewNote(newNote);
+		this.AddNewNote(newNote, t);
+	}
+
+	/**
+	 * 获取全部笔记本，以Book对象的List返回
+	 */
+	public List<Book> getAllBook()
+	{
+		List<Book> getallbook = new ArrayList<Book>();
+		Cursor cursor = db.query("allbook", null, null, null, null, null, null);
+		if (cursor.moveToFirst())
+		{
+			do
+			{
+				Book book = new Book();
+				book.setId(cursor.getInt(cursor.getColumnIndex("id")));
+				book.setBookname(cursor.getString(cursor
+						.getColumnIndex("book_name")));
+				book.setBookcount(cursor.getInt(cursor
+						.getColumnIndex("book_count")));
+				getallbook.add(book);
+			} while (cursor.moveToNext());
+		}
+		return getallbook;
+	}
+
+	public List<Note> queryThisBook(String table)
+	{
+		List<Note> list = new ArrayList<Note>();
+		Cursor cursor = db.query(table, null, null, null, null, null, null);
+		if (cursor.moveToFirst())
+		{
+			do
+			{
+				Note note = new Note();
+				note.setNoteTitle(cursor.getString(cursor
+						.getColumnIndex("title")));
+				note.setNoteContent(cursor.getString(cursor
+						.getColumnIndex("content")));
+				note.setNoteDate(cursor.getString(cursor.getColumnIndex("date")));
+				note.setNotePic(cursor.getString(cursor.getColumnIndex("path")));
+				note.setNoteReminder(cursor.getString(cursor
+						.getColumnIndex("reminder")));
+				list.add(note);
+			} while (cursor.moveToNext());
+		}
+		return list;
 	}
 
 	public List<String> queryAllBook()
@@ -161,6 +214,29 @@ public class NeverNoteDB
 			} while (bookcursor.moveToNext());
 		}
 		return books;
+	}
+
+	public int getCount(String table)
+	{
+		int count = 0;
+		Cursor cursor = db.query("allbook", new String[] { "book_count" },
+				"book_name = ?", new String[] { table }, null, null, null);
+		if(cursor.moveToFirst())
+		{
+			do
+			{
+				count = cursor.getInt(cursor.getColumnIndex("book_count"));
+			} while (cursor.moveToNext());
+		}
+		return count;
+	}
+	
+
+	private void updateCount(String table, int i)
+	{
+		ContentValues values = new ContentValues();
+		values.put("book_count", i);
+		db.update("allbook", values, "book_name = ?", new String[]{table});
 	}
 
 }

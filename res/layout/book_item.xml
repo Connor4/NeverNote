@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Match"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp" >
+
+    <RelativeLayout
+        style="@style/BookItem"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp" >
+
+        <TextView
+            android:id="@+id/Book_Name"
+            style="@style/Warp"
+            android:ellipsize="end"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:singleLine="true"
+            android:text="this is book name"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_medium" />
+
+        <TextView
+            android:id="@+id/Book_Count"
+            style="@style/Warp"
+            android:layout_below="@id/Book_Name"
+            android:ellipsize="end"
+            android:paddingLeft="5dp"
+            android:singleLine="true"
+            android:text="this is book count"
+            android:textColor="@color/background_color"
+            android:textSize="@dimen/text_size_micro" />
+    </RelativeLayout>
+
+</RelativeLayout>

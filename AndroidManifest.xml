@@ -32,6 +32,7 @@
         <activity android:name="com.connor.activity.AddNoteActivity" />
         <activity android:name="com.connor.activity.ViewNote" />
         <activity android:name="com.connor.activity.EditNote"/>
+        <activity android:name="com.connor.activity.BooksNotes"/>
     </application>
 
 </manifest>

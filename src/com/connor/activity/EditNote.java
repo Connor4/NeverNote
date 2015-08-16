@@ -52,6 +52,7 @@ public class EditNote extends Activity
 	private EditText mTitle;
 	private EditText mContent;
 	private TextView mGroup;
+	private String table="";
 
 	private NeverNoteDB mNeverNoteDB;
 
@@ -169,8 +170,7 @@ public class EditNote extends Activity
 							Note note = new Note(mTitle.getText().toString(),
 									mContent.getText().toString(), photoPath,
 									dateFormat.format(date), "", "");
-							mNeverNoteDB.AddEditedNote(parasenote, note);
-							
+							mNeverNoteDB.AddEditedNote(parasenote, note,table);
 							finish();
 						}
 					}).start();
@@ -183,7 +183,9 @@ public class EditNote extends Activity
 	{
 		GetPhoto mGetPhoto = new GetPhoto();
 		parasenote = getIntent().getParcelableExtra("edit_object");
-
+		table = getIntent().getStringExtra("table");
+		
+		mGroup.setText(table);
 		mTitle.setText(parasenote.getNoteTitle());
 
 		String path = photoPath = parasenote.getNotePic();

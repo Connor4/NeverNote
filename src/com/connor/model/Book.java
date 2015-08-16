@@ -4,9 +4,14 @@ public class Book
 {
 	private int id;
 	private String bookname;
-	private String bookcount;
+	private int bookcount;
 
-	public Book(int id, String bookname, String bookcount)
+	public Book()
+	{
+		super();
+	}
+
+	public Book(int id, String bookname, int bookcount)
 	{
 		super();
 		this.id = id;
@@ -34,12 +39,12 @@ public class Book
 		this.bookname = bookname;
 	}
 
-	public String getBookcount()
+	public int getBookcount()
 	{
 		return bookcount;
 	}
 
-	public void setBookcount(String bookcount)
+	public void setBookcount(int bookcount)
 	{
 		this.bookcount = bookcount;
 	}

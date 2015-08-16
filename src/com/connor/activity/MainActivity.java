@@ -44,7 +44,6 @@ public class MainActivity extends Activity
 			R.drawable.drawer_book_default, R.drawable.drawer_setting };
 	private ImageView mDrawerUserImage;
 	private static boolean flag = false;
-	private static String STATE_SELECTED_POSITION;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -54,16 +53,8 @@ public class MainActivity extends Activity
 
 		initDrawerLayout();
 
-		if (savedInstanceState == null)
-		{
-			getFragmentManager().beginTransaction()
-					.replace(R.id.contentFrame, new AllNoteFragment()).commit();
-
-		} else
-		{
-			currentSelectedPosition = savedInstanceState
-					.getInt(STATE_SELECTED_POSITION);
-		}
+		getFragmentManager().beginTransaction()
+				.replace(R.id.contentFrame, new AllNoteFragment()).commit();
 
 	}
 
@@ -117,13 +108,6 @@ public class MainActivity extends Activity
 		});
 
 		selectItem(currentSelectedPosition);
-	}
-
-	@Override
-	public void onSaveInstanceState(Bundle outState)
-	{
-		super.onSaveInstanceState(outState);
-		outState.putInt(STATE_SELECTED_POSITION, currentSelectedPosition);
 	}
 
 	@Override
@@ -225,14 +209,13 @@ public class MainActivity extends Activity
 		switch (position)
 		{
 		case 0:
-			AllNoteFragment fragment = new AllNoteFragment();
 			getFragmentManager().beginTransaction()
-					.replace(R.id.contentFrame, fragment).commit();
+					.replace(R.id.contentFrame, new AllNoteFragment()).commit();
 			flag = false;
 			break;
 		case 1:
-			Toast.makeText(getApplicationContext(), "case 1",
-					Toast.LENGTH_SHORT).show();
+			getFragmentManager().beginTransaction()
+					.replace(R.id.contentFrame, new AllBookFragment()).commit();
 			flag = true;
 			break;
 		case 2:

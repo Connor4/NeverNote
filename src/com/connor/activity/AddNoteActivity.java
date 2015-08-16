@@ -127,7 +127,7 @@ public class AddNoteActivity extends Activity
 					Note note = new Note(mTitle.getText().toString(), mContent
 							.getText().toString(), photoPath.toString(),
 							dateFormat.format(date), "", "");
-					mNeverNoteDB.AddNewNote(note);
+					mNeverNoteDB.AddNewNote(note,"");
 					finish();
 				}
 			}
