@@ -3,23 +3,33 @@ package com.connor.activity;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import com.connor.model.Note;
 import com.connor.nevernote.R;
+import com.connor.receiver.AlarmReceiver;
 import com.connor.utils.NeverNoteDB;
 import com.connor.utils.PhotoWithCamUtil;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.app.Service;
+import android.app.TimePickerDialog;
+import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -32,6 +42,7 @@ import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 public class AddNoteActivity extends Activity
@@ -53,6 +64,7 @@ public class AddNoteActivity extends Activity
 	private EditText mContent;
 	private TextView mGroup;
 
+	private AlarmManager mManager;
 	private NeverNoteDB mNeverNoteDB;
 	private Boolean call;
 
@@ -64,10 +76,10 @@ public class AddNoteActivity extends Activity
 
 		initContent();
 		initListener();
-		
+
 		call = getIntent().getBooleanExtra("CallForCam", false);
 		{
-			if(call)
+			if (call)
 			{
 				this.CallForCam();
 			}
@@ -81,10 +93,12 @@ public class AddNoteActivity extends Activity
 		mAttachVeiw = (ImageView) findViewById(R.id.newnote_attach_iv);
 		mCamView = (ImageView) findViewById(R.id.newnote_photo);
 		mMoreView = (ImageView) findViewById(R.id.newnote_more);
+		mReminderView = (ImageView) findViewById(R.id.newnote_reminder_iv);
 		mTitle = (EditText) findViewById(R.id.newnote_et_title);
 		mContent = (EditText) findViewById(R.id.newnote_et_content);
 		mGroup = (TextView) findViewById(R.id.newnote_group);
 		mNeverNoteDB = NeverNoteDB.getInstance(this);
+		mManager = (AlarmManager) getSystemService(Service.ALARM_SERVICE);
 		photoPath = new ArrayList<String>();
 	}
 
@@ -127,16 +141,46 @@ public class AddNoteActivity extends Activity
 					Note note = new Note(mTitle.getText().toString(), mContent
 							.getText().toString(), photoPath.toString(),
 							dateFormat.format(date), "", "");
-					mNeverNoteDB.AddNewNote(note,"");
+					mNeverNoteDB.AddNewNote(note, "");
 					finish();
 				}
 			}
 		});
+
+		mReminderView.setOnClickListener(new OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				Calendar currentTime = Calendar.getInstance();
+				new TimePickerDialog(AddNoteActivity.this, 0,//
+						new TimePickerDialog.OnTimeSetListener()
+						{
+							@Override
+							public void onTimeSet(TimePicker view,
+									int hourOfDay, int minute)
+							{
+								Calendar c = Calendar.getInstance();
+								c.setTimeInMillis(System.currentTimeMillis());
+								c.set(Calendar.HOUR, hourOfDay);
+								c.set(Calendar.MINUTE, minute);
+								
+								Intent intent = new Intent();
+								intent.setAction("AlarmReceiver");
+								PendingIntent pi = PendingIntent.getBroadcast(
+										AddNoteActivity.this, 0, intent, 0);
+								mManager.set(AlarmManager.RTC_WAKEUP,
+										c.getTimeInMillis(), pi);
+							}
+						}, currentTime.get(Calendar.HOUR_OF_DAY), currentTime
+								.get(Calendar.MINUTE), false).show();
+			}
+		});
 	}
-	
-	public void CallForCam()
+
+	private void CallForCam()
 	{
-		//调用系统相机
+		// 调用系统相机
 		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); // 调用系统相机
 		Uri imageUri = Uri.fromFile(new File(Environment
 				.getExternalStorageDirectory(), "image.jpg"));

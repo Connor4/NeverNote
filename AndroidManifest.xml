@@ -31,8 +31,14 @@
         </activity>
         <activity android:name="com.connor.activity.AddNoteActivity" />
         <activity android:name="com.connor.activity.ViewNote" />
-        <activity android:name="com.connor.activity.EditNote"/>
-        <activity android:name="com.connor.activity.BooksNotes"/>
+        <activity android:name="com.connor.activity.EditNote" />
+        <activity android:name="com.connor.activity.BooksNotes" />
+
+        <receiver android:name="com.connor.receiver.AlarmReceiver" >
+            <intent-filter>
+                <action android:name="AlarmReceiver" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

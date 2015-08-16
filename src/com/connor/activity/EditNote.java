@@ -3,17 +3,23 @@ package com.connor.activity;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
 import com.connor.model.Note;
 import com.connor.nevernote.R;
+import com.connor.receiver.AlarmReceiver;
 import com.connor.utils.GetPhoto;
 import com.connor.utils.NeverNoteDB;
 import com.connor.utils.PhotoWithCamUtil;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.app.Service;
+import android.app.TimePickerDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -33,6 +39,7 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 public class EditNote extends Activity
@@ -48,7 +55,6 @@ public class EditNote extends Activity
 	private ImageView mAttachVeiw;
 	private ImageView mCamView;
 	private ImageView mMoreView;
-	private ImageView mReminderView;
 	private EditText mTitle;
 	private EditText mContent;
 	private TextView mGroup;
@@ -66,6 +72,27 @@ public class EditNote extends Activity
 		initData();
 		initeEvent();
 
+	}
+	
+	private void setAlarm()
+	{
+		Calendar currentTime = Calendar.getInstance();
+		new TimePickerDialog(EditNote.this, 0,//
+				new TimePickerDialog.OnTimeSetListener()
+				{
+					@Override
+					public void onTimeSet(TimePicker view, int hourOfDay,
+							int minute)
+					{
+						Intent intent = new Intent(EditNote.this, AlarmReceiver.class);
+						PendingIntent pi =PendingIntent.getActivity(EditNote.this, 0, intent, 0);
+						Calendar c =Calendar.getInstance();
+						c.setTimeInMillis(System.currentTimeMillis());
+						c.set(Calendar.HOUR, hourOfDay);
+						c.set(Calendar.MINUTE, minute);
+					}
+				}, currentTime.get(Calendar.HOUR_OF_DAY),
+				currentTime.get(Calendar.MINUTE), false).show();
 	}
 
 	public void handlePath(String path)
@@ -177,6 +204,8 @@ public class EditNote extends Activity
 				}
 			}
 		});
+		
+	
 	}
 
 	private void initData()
