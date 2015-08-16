@@ -122,7 +122,26 @@ public class AllNoteFragment extends Fragment implements
 					}).start();
 
 					break;
-				case 2:
+				case 4:
+					new Thread(new Runnable()
+					{
+						@Override
+						public void run()
+						{
+							try
+							{
+								Thread.sleep(250);
+								Intent intent = new Intent(getActivity(),
+										AddNoteActivity.class);
+								intent.putExtra("CallForCam", true);
+								startActivity(intent);
+							} catch (InterruptedException e)
+							{
+								e.printStackTrace();
+							}
+						}
+					}).start();
+
 					break;
 				default:
 					break;

@@ -54,6 +54,7 @@ public class AddNoteActivity extends Activity
 	private TextView mGroup;
 
 	private NeverNoteDB mNeverNoteDB;
+	private Boolean call;
 
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -63,6 +64,14 @@ public class AddNoteActivity extends Activity
 
 		initContent();
 		initListener();
+		
+		call = getIntent().getBooleanExtra("CallForCam", false);
+		{
+			if(call)
+			{
+				this.CallForCam();
+			}
+		}
 	}
 
 	private void initContent()
@@ -86,20 +95,7 @@ public class AddNoteActivity extends Activity
 			@Override
 			public void onClick(View v)
 			{
-				/**
-				 * 这是调用相机
-				 */
-				// Intent getImageByCamera = new Intent(
-				// "android.media.action.IMAGE_CAPTURE");
-				// startActivityForResult(getImageByCamera, CAMERA_SUCCESS);
-
-				Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); // 调用系统相机
-				Uri imageUri = Uri.fromFile(new File(Environment
-						.getExternalStorageDirectory(), "image.jpg"));
-				// 指定照片保存路径（SD卡），image.jpg为一个临时文件，每次拍照后这个图片都会被替换
-				intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-				// 直接使用，没有缩小
-				startActivityForResult(intent, PHOTO_WITH_CAMERA); // 用户点击了从相机获取
+				CallForCam();
 				/**
 				 * 这是调用相册的，给附件用
 				 */
@@ -136,6 +132,18 @@ public class AddNoteActivity extends Activity
 				}
 			}
 		});
+	}
+	
+	public void CallForCam()
+	{
+		//调用系统相机
+		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); // 调用系统相机
+		Uri imageUri = Uri.fromFile(new File(Environment
+				.getExternalStorageDirectory(), "image.jpg"));
+		// 指定照片保存路径（SD卡），image.jpg为一个临时文件，每次拍照后这个图片都会被替换
+		intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+		// 直接使用，没有缩小
+		startActivityForResult(intent, PHOTO_WITH_CAMERA); // 用户点击了从相机获取
 	}
 
 	@Override
